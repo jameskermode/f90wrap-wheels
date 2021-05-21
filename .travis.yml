@@ -1,9 +1,11 @@
 env:
     global:
-        - F90WRAP_VERSION=0.2.5
+        - F90WRAP_VERSION=0.2.4
         - PROJECT_SPEC="f90wrap==${F90WRAP_VERSION}"
-      	- BUILD_DEPENDS="oldest-supported-numpy"
-      	- TEST_DEPENDS="numpy"
+        - NP_BUILD_DEP="numpy==1.16.5"
+        - NP_TEST_DEP="numpy==1.16.5"
+        # that you need, that are also specified in BUILD_DEPENDS, this will be
+        # a separate install.
         # Now see the Uploads section for the stuff you need to
         # upload your wheels after CI has built them.
 
@@ -45,16 +47,22 @@ matrix:
       language: generic
       env:
         - MB_PYTHON_VERSION=3.7
+        - NP_BUILD_DEP=numpy==1.16.5
+        - NP_TEST_DEP=numpy==1.16.5
     - os: osx
       language: generic
       env:
         - MB_PYTHON_VERSION=3.8
         - MB_PYTHON_OSX_VER=10.9
+        - NP_BUILD_DEP=numpy==1.17.3
+        - NP_TEST_DEP=numpy==1.17.3
     - os: osx
       language: generic
       env:
         - MB_PYTHON_VERSION=3.9
         - MB_PYTHON_OSX_VER=10.9
+        - NP_BUILD_DEP=numpy==1.19.3
+        - NP_TEST_DEP=numpy==1.19.3        
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.6
@@ -65,26 +73,41 @@ matrix:
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.7
+        - NP_BUILD_DEP=numpy==1.16.5
+        - NP_TEST_DEP=numpy==1.16.5
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.7
         - PLAT=i686
+        - NP_BUILD_DEP=numpy==1.16.5
+        - NP_TEST_DEP=numpy==1.16.5
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.8
+        - NP_BUILD_DEP=numpy==1.17.3
+        - NP_TEST_DEP=numpy==1.17.3
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.8
         - PLAT=i686
+        - NP_BUILD_DEP=numpy==1.17.3
+        - NP_TEST_DEP=numpy==1.17.3
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.9
+        - NP_BUILD_DEP=numpy==1.19.3
+        - NP_TEST_DEP=numpy==1.19.3
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.9
         - PLAT=i686
+        - NP_BUILD_DEP=numpy==1.19.3
+        - NP_TEST_DEP=numpy==1.19.3
+
 
 before_install:
+    - BUILD_DEPENDS="$NP_BUILD_DEP"
+    - TEST_DEPENDS="$NP_TEST_DEP"
     - source multibuild/common_utils.sh
     - source multibuild/travis_steps.sh
     - before_install
