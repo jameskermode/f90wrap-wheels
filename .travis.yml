@@ -3,9 +3,9 @@ env:
         - F90WRAP_VERSION=0.2.3
         - PROJECT_SPEC="f90wrap==${F90WRAP_VERSION}"
         # pip dependencies to _build_ your project
-        - BUILD_DEPENDS="numpy==1.13.3"
+        - BUILD_DEPENDS="numpy"
         # pip dependencies to _test_ your project.  Include any dependencies
-        - TEST_DEPENDS="numpy==1.13.3"
+        - TEST_DEPENDS="numpy"
         # that you need, that are also specified in BUILD_DEPENDS, this will be
         # a separate install.
         # Now see the Uploads section for the stuff you need to
