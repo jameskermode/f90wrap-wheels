@@ -6,5 +6,5 @@ function run_tests {
     python --version
     curl https://codeload.github.com/jameskermode/f90wrap/tar.gz/v${F90WRAP_VERSION}.tar.gz -o f90wrap.tgz
     tar xzf f90wrap.tar.gz
-    (cd f90wrap-${F90WRAP_VERSION}/examples; make test)
+    (cd f90wrap-${F90WRAP_VERSION}/examples; PYTHON=python make test)
 }
