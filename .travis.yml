@@ -106,8 +106,8 @@ matrix:
 
 
 before_install:
-    - BUILD_DEPENDS="$NP_BUILD_DEP"
-    - TEST_DEPENDS="$NP_TEST_DEP"
+    - BUILD_DEPENDS="oldest-supported-numpy"
+    - TEST_DEPENDS="numpy"
     - source multibuild/common_utils.sh
     - source multibuild/travis_steps.sh
     - before_install
