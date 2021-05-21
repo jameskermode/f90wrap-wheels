@@ -1,6 +1,6 @@
 env:
     global:
-        - F90WRAP_VERSION=0.2.4
+        - F90WRAP_VERSION=0.2.5
         - PROJECT_SPEC="f90wrap==${F90WRAP_VERSION}"
         - NP_BUILD_DEP="numpy==1.16.5"
         - NP_TEST_DEP="numpy==1.16.5"
