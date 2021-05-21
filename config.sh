@@ -4,6 +4,7 @@
 function run_tests {
     # Runs tests on installed distribution from an empty directory
     python --version
-    git clone https://github.com/jameskermode/f90wrap
-    (cd f90wrap/examples; make test)
+    curl https://codeload.github.com/jameskermode/f90wrap/tar.gz/v${F90WRAP_VERSION}.tar.gz -o f90wrap.tgz
+    tar xzf f90wrap.tar.gz
+    (cd f90wrap-${F90WRAP_VERSION}/examples; make test)
 }
