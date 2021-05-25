@@ -99,7 +99,8 @@ script:
     - install_run $PLAT
 
 after_success:
-    - if: tag IS present AND tag =~ /^v(\d+\.)?(\d+\.)?(\*|\d+)$/
+    - if: tag IS present
+      # AND tag =~ /^v(\d+\.)?(\d+\.)?(\*|\d+)$/
       - TWINE_USERNAME="__token__"
       - secure: "Cs8VIHdtAcYAZ5MkUBDoyxfsm/hndj3ejtGRXn2cOBDrGu5AsACgDrOCGMWOSANukJ9OK60IH8h/G48ymt9o6djM9LjfgSvE+CrQqZQwFdCbEAiS1bxbHnKSvdkULiYZmKqNyQd47w0JfNT6748XDTjtlYFRzcrAl7LA7iqCnqtblE9w4bhoAz4gax6dY3LTxwpdC2s59WaBYD2mNfnOhUnLZWNt9b+Q6QFJTpnUX3wdXVwXmWjxremoz9RZerD8VPC1MpD9l2/2hDawas5n1jrHvlZZE6+f6TmW9myA6t3O5jcyURge42iBk3HQJM1DvCXy6mUknmuAOM0gwGY1rGZf6/MRdJii8dpuv9fQ/x4FmnKuGJYhjmlLfw0QAYnd3W2AJ2xntKhNpcf33XZQ8oBgypdE37dxmswrWQem5QbyDiYUZq52CLkPFSUjxE9DsiOZ3Cwpmz8we/9WWXDI0QJRC8I/blR21c5Y4j0hn699w34jtXidFJRWasBxd9Pil2pZ/JFwdzZW2y2fSlhzpp9XP2t4MQ2dfqJQJaAMHygwNseWPLSoyUiX1Q+Wmo9YZlU9bAj3nfqE5z++2IAMrru5SNKacrnnMZ0VqRqfOmgtSB06O+Rtgtn6WDl73nYL5UKzPElA6zNB9B/qKk75VPjggW20IG1heIFKyxcbCT4="
       - pip install twine
