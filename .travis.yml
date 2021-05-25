@@ -1,124 +1,99 @@
 env:
-    global:
-        - F90WRAP_VERSION=0.2.5
-        - PROJECT_SPEC="f90wrap==${F90WRAP_VERSION}"
-        # that you need, that are also specified in BUILD_DEPENDS, this will be
-        # a separate install.
-        # Now see the Uploads section for the stuff you need to
-        # upload your wheels after CI has built them.
+  global:
+  - F90WRAP_VERSION=0.2.5
+  - PROJECT_SPEC="f90wrap==${F90WRAP_VERSION}"
+  - secure: VKwo04eq3Lm7uSGt7fERX+48Nbul82+v6tFZZFS8XWizGjmjPHdfOWNW/MrNvvdKPnwNyw0IKIHpqqeOyIteOkYyQNKNsCeHQuG6HlIUT5bIl0p8vvRXIHZFRQLhisuRuNrGT+qTnYtf0OnGWv383Gd0mxmuYStKFQHlqI/4guaXXSA6wYlVoPjTpNZuMJ7iN7pE0hQNSkhV7oHyQa+mAx/83BbyverzIFVzz2n6/Khlqt+BOnSu/FsMNvMWdu5OivUMaBUFY9qhp+EUGrdKZppDcqUkCDPqzgy2Gi9w6UVV3gccnnstcVs1h+rDFn+e+GD8Gf+jPgGMlkehOvkCkKGK5oXOp4ulH8N17do98bKYeLjYqRViZD4GdHo7+EY3fbwNTqkMW4KILM0rgfkZ0COabRNf9zP6HYn609xy51AzBD2xve73Ty9/b3sEMhkvFfIBg//H7l53LL6m+FWxbjfLf1txvI7EHx8S56V5Jzj8RGtmnsVshDHucwrpxgk+NaxH4COk6mx+ak0Gzky3N3j61yIXLv0SNhytIgG8eN5et26VWtpoe09Uh5UkbBm4RTto2F8G6m6hIB7CRs/S7Y7S6cV10AfvD0bH30TxyPvglTBPFV6jXfsx52V+u5u41YqXT8ehZDDewLFLyJwxky1gvYBQ+VRl00mOMpK7DkI=
 
-# You will likely prefer "language: generic" for travis configuration,
-# rather than, say "language: python". Multibuild doesn't use
-# Travis-provided Python but rather installs and uses its own, where the
-# Python version is set from the MB_PYTHON_VERSION variable. You can still
-# specify a language here if you need it for some unrelated logic and you
-# can't use Multibuild-provided Python or other software present on a
-# builder.
 language: generic
 
-# For CPython macOS builds only, the minimum supported macOS version and
-# architectures of any C extensions in the wheel are set with the variable
-# MB_PYTHON_OSX_VER: 10.9 (64-bit only) or 10.6 (64/32-bit dual arch). By
-# default this is set to the highest available for the Python version selected
-# using MB_PYTHON_VERSION. You should only need to set this explicitly if you
-# are building a 10.6 dual-arch build for a CPython version where both a 10.9 and
-# 10.6 build are available (for example, 2.7 or 3.7).
-# All PyPy macOS builds are 64-bit only.
-
-# Required in Linux to invoke `docker` ourselves
 services: docker
 
-# Host distribution.  This is the distribution from which we run the build
-# and test containers, via docker.
 dist: xenial
 
-# osx image that enables building Apple silicon libraries
 osx_image: xcode12.2
 
 matrix:
   include:
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=3.6
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=3.7
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=3.8
-        - MB_PYTHON_OSX_VER=10.9
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=3.9
-        - MB_PYTHON_OSX_VER=10.9
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.6
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.6
-        - PLAT=i686
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.7
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.7
-        - PLAT=i686
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.8
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.8
-        - PLAT=i686
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.9
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.9
-        - PLAT=i686
-
+  - os: osx
+    language: generic
+    env:
+    - MB_PYTHON_VERSION=3.6
+  - os: osx
+    language: generic
+    env:
+    - MB_PYTHON_VERSION=3.7
+  - os: osx
+    language: generic
+    env:
+    - MB_PYTHON_VERSION=3.8
+    - MB_PYTHON_OSX_VER=10.9
+  - os: osx
+    language: generic
+    env:
+    - MB_PYTHON_VERSION=3.9
+    - MB_PYTHON_OSX_VER=10.9
+  - os: linux
+    env:
+    - MB_PYTHON_VERSION=3.6
+  - os: linux
+    env:
+    - MB_PYTHON_VERSION=3.6
+    - PLAT=i686
+  - os: linux
+    env:
+    - MB_PYTHON_VERSION=3.7
+  - os: linux
+    env:
+    - MB_PYTHON_VERSION=3.7
+    - PLAT=i686
+  - os: linux
+    env:
+    - MB_PYTHON_VERSION=3.8
+  - os: linux
+    env:
+    - MB_PYTHON_VERSION=3.8
+    - PLAT=i686
+  - os: linux
+    env:
+    - MB_PYTHON_VERSION=3.9
+  - os: linux
+    env:
+    - MB_PYTHON_VERSION=3.9
+    - PLAT=i686
 
 before_install:
-    - BUILD_DEPENDS="oldest-supported-numpy"
-    - TEST_DEPENDS="numpy"
-    - source multibuild/common_utils.sh
-    - source multibuild/travis_steps.sh
-    - before_install
+- BUILD_DEPENDS="oldest-supported-numpy"
+- TEST_DEPENDS="numpy"
+- source multibuild/common_utils.sh
+- source multibuild/travis_steps.sh
+- before_install
 
 install:
-    - build_index_wheel $PROJECT_SPEC
+- build_index_wheel $PROJECT_SPEC
 
 script:
-    - install_run $PLAT
+- install_run $PLAT
 
 after_success:
-    - TWINE_USERNAME="__token__"
-    - secure: "Cs8VIHdtAcYAZ5MkUBDoyxfsm/hndj3ejtGRXn2cOBDrGu5AsACgDrOCGMWOSANukJ9OK60IH8h/G48ymt9o6djM9LjfgSvE+CrQqZQwFdCbEAiS1bxbHnKSvdkULiYZmKqNyQd47w0JfNT6748XDTjtlYFRzcrAl7LA7iqCnqtblE9w4bhoAz4gax6dY3LTxwpdC2s59WaBYD2mNfnOhUnLZWNt9b+Q6QFJTpnUX3wdXVwXmWjxremoz9RZerD8VPC1MpD9l2/2hDawas5n1jrHvlZZE6+f6TmW9myA6t3O5jcyURge42iBk3HQJM1DvCXy6mUknmuAOM0gwGY1rGZf6/MRdJii8dpuv9fQ/x4FmnKuGJYhjmlLfw0QAYnd3W2AJ2xntKhNpcf33XZQ8oBgypdE37dxmswrWQem5QbyDiYUZq52CLkPFSUjxE9DsiOZ3Cwpmz8we/9WWXDI0QJRC8I/blR21c5Y4j0hn699w34jtXidFJRWasBxd9Pil2pZ/JFwdzZW2y2fSlhzpp9XP2t4MQ2dfqJQJaAMHygwNseWPLSoyUiX1Q+Wmo9YZlU9bAj3nfqE5z++2IAMrru5SNKacrnnMZ0VqRqfOmgtSB06O+Rtgtn6WDl73nYL5UKzPElA6zNB9B/qKk75VPjggW20IG1heIFKyxcbCT4="
-    - |
-      if [[ -n "${TRAVIS_TAG}" ]]; then
-        if echo "${TRAVIS_TAG}" | grep -Eq '^v(\d+\.)?(\d+\.)?(\*|\d+)'; then
-          echo Deploying ${TRAVIS_TAG} to Test PyPI
-          pip install twine
-          twine upload -r https://test.pypi.org ${TRAVIS_BUILD_DIR}/${WHEEL_SDIR}/*.whl
-        else
-          echo Skipping deployment of tag ${TRAVIS_TAG} to PyPi
-        fi
-      fi
+- |
+  echo "after_success for tag ${TRAVIS_TAG}"
+  if [[ -n "${TRAVIS_TAG}" ]]; then
+    if echo "${TRAVIS_TAG}" | grep -Eq '^v(\d+\.)?(\d+\.)?(\*|\d+)'; then
+      echo Deploying ${TRAVIS_TAG} to Test PyPI
+      pip install twine
+      twine upload -r https://test.pypi.org ${TRAVIS_BUILD_DIR}/${WHEEL_SDIR}/*.whl
+    else
+      echo Skipping deployment of tag ${TRAVIS_TAG} to PyPi
+    fi
+  fi
 
 deploy:
-  - provider: releases
-    api_key:
-      secure: "BwKCEsOA/12MulsPa8unDrjEa/AndgSo8n7eQGOotkbn9YmFu2w0rLw1cjKDK5weoBOgb0uccnjowCXKt303HWiO2/mXnEH3S3W/HgbpT5uNH/V5h3zOpj/HBbRspS8FFFXhBoZuE66UcZqg3C/r5GBQrrgHfxxRyu46B74q5J3oskh8cs/yaCEU+BzXg2fv2QjOmtQA8XFfA7LlDXha7GqTzvTNrslYYLInYC+tpJ1ZaAwRQcHVQHmMgu2TniITPJhnrS+1/DbyP12VSD8rA6S9PhRynKztSS9mcnW9eYggJvgbkj8jw6cT1pm+5Nom5K6N8Z2078uWQu+GT6Di8+ajrFpD2q0q3U/5Xt/VZcvr2fxZRY9BXw08poYeRMKEBuRvhMRfTCvOD/fzxE1fiB9lW9Qva4NWq9H9p0spWLjaEnbM55f2tFQbBdaxwMyzd3Po9v1/2WaLrduSrhWh2Ie5IwsdDSiAT+f+M7qP5ob97k4MeFJtn7XGLa9a5rtxoiFiEbtC0AIrzoZV1wEH/ZtmvY+GAjvXQx53UaA/NBRVE8zhsQIuzNFjUvPoIV3oC0NQw9BHGGHx+dN0G+cIjNduEk6elIBCY7X29imZJC+o42KSKLnVNSMzzMt3gxSnhaUzWrwRGsOcneKdSxb59V10zu4nR1us5WUII8PSNgQ="
-    file_glob: true
-    file: "${TRAVIS_BUILD_DIR}/${WHEEL_SDIR}/*.whl"
-    skip_cleanup: true
-    on:
-      repo: jameskermode/f90wrap-wheels
-      tags: true
+- provider: releases
+  api_key:
+    secure: BwKCEsOA/12MulsPa8unDrjEa/AndgSo8n7eQGOotkbn9YmFu2w0rLw1cjKDK5weoBOgb0uccnjowCXKt303HWiO2/mXnEH3S3W/HgbpT5uNH/V5h3zOpj/HBbRspS8FFFXhBoZuE66UcZqg3C/r5GBQrrgHfxxRyu46B74q5J3oskh8cs/yaCEU+BzXg2fv2QjOmtQA8XFfA7LlDXha7GqTzvTNrslYYLInYC+tpJ1ZaAwRQcHVQHmMgu2TniITPJhnrS+1/DbyP12VSD8rA6S9PhRynKztSS9mcnW9eYggJvgbkj8jw6cT1pm+5Nom5K6N8Z2078uWQu+GT6Di8+ajrFpD2q0q3U/5Xt/VZcvr2fxZRY9BXw08poYeRMKEBuRvhMRfTCvOD/fzxE1fiB9lW9Qva4NWq9H9p0spWLjaEnbM55f2tFQbBdaxwMyzd3Po9v1/2WaLrduSrhWh2Ie5IwsdDSiAT+f+M7qP5ob97k4MeFJtn7XGLa9a5rtxoiFiEbtC0AIrzoZV1wEH/ZtmvY+GAjvXQx53UaA/NBRVE8zhsQIuzNFjUvPoIV3oC0NQw9BHGGHx+dN0G+cIjNduEk6elIBCY7X29imZJC+o42KSKLnVNSMzzMt3gxSnhaUzWrwRGsOcneKdSxb59V10zu4nR1us5WUII8PSNgQ=
+  file_glob: true
+  file: "${TRAVIS_BUILD_DIR}/${WHEEL_SDIR}/*.whl"
+  cleanup: false
+  on:
+    repo: jameskermode/f90wrap-wheels
+    tags: true

@@ -38,7 +38,7 @@ git push --tags
 ```
 
 If all goes well, the `.whl` files will show up as assets within a new GitHub release.
-Installation process should now be tested locally, e.g. on Mac OS X with Python 3.9:
+The installation process should now be tested locally, e.g. on Mac OS X with Python 3.9:
 
 ```bash
 pip install https://github.com/jameskermode/f90wrap-wheels/releases/download/v0.x.y-rc1/f90wrap-0.2.5-cp39-cp39-macosx_10_9_x86_64.whl
@@ -48,5 +48,4 @@ If there are problems with the build, the `test.sh` script can be useful to debu
 
 ### 3. Release wheels to PyPI
 
-Once everything works correctly, make a full release (i.e. just `v0.x.y` without the `-rc1` suffix) and then manually trigger the GitHub action to upload wheels to
-PyPI.
+Once everything works correctly, make a full release (i.e. just `v0.x.y` without the `-rc1` suffix). This will trigger the upload of wheels to PyPI.
