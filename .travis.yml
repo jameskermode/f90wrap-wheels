@@ -81,7 +81,7 @@ after_success:
     if echo "${TRAVIS_TAG}" | grep -Eq '^v(\d+\.)?(\d+\.)?(\*|\d+)'; then
       echo Deploying ${TRAVIS_TAG} to Test PyPI
       pip install twine
-      twine upload -r https://test.pypi.org ${TRAVIS_BUILD_DIR}/${WHEEL_SDIR}/*.whl
+      twine upload --repository testpypi ${TRAVIS_BUILD_DIR}/${WHEEL_SDIR}/*.whl
     else
       echo Skipping deployment of tag ${TRAVIS_TAG} to PyPi
     fi
