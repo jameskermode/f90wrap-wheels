@@ -7,10 +7,12 @@ export F90WRAP_VERSION=0.2.5 # FIXME should avoid duplicating this from .travis.
 
 function run_tests {
     # clone repo, checkout release branch and run tests
-    apt-get install -y git
+    if [[ -n "$IS_MACOS"]]; then
+        apt-get install -y git
+    fi
     git clone --depth 1 https://github.com/jameskermode/f90wrap
     cd f90wrap
     git checkout v${F90WRAP_VERSION}
     cd examples
-    python3 run_all.py -v
+    make test
 }
