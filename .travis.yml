@@ -2,6 +2,8 @@ env:
   global:
   - F90WRAP_VERSION=0.2.5
   - PROJECT_SPEC="f90wrap==${F90WRAP_VERSION}"
+  - TWINE_USERNAME="__token__"
+  - TWINE_NON_INTERACTIVE=1
   - secure: VKwo04eq3Lm7uSGt7fERX+48Nbul82+v6tFZZFS8XWizGjmjPHdfOWNW/MrNvvdKPnwNyw0IKIHpqqeOyIteOkYyQNKNsCeHQuG6HlIUT5bIl0p8vvRXIHZFRQLhisuRuNrGT+qTnYtf0OnGWv383Gd0mxmuYStKFQHlqI/4guaXXSA6wYlVoPjTpNZuMJ7iN7pE0hQNSkhV7oHyQa+mAx/83BbyverzIFVzz2n6/Khlqt+BOnSu/FsMNvMWdu5OivUMaBUFY9qhp+EUGrdKZppDcqUkCDPqzgy2Gi9w6UVV3gccnnstcVs1h+rDFn+e+GD8Gf+jPgGMlkehOvkCkKGK5oXOp4ulH8N17do98bKYeLjYqRViZD4GdHo7+EY3fbwNTqkMW4KILM0rgfkZ0COabRNf9zP6HYn609xy51AzBD2xve73Ty9/b3sEMhkvFfIBg//H7l53LL6m+FWxbjfLf1txvI7EHx8S56V5Jzj8RGtmnsVshDHucwrpxgk+NaxH4COk6mx+ak0Gzky3N3j61yIXLv0SNhytIgG8eN5et26VWtpoe09Uh5UkbBm4RTto2F8G6m6hIB7CRs/S7Y7S6cV10AfvD0bH30TxyPvglTBPFV6jXfsx52V+u5u41YqXT8ehZDDewLFLyJwxky1gvYBQ+VRl00mOMpK7DkI=
 
 language: generic
@@ -78,7 +80,7 @@ after_success:
 - |
   echo "after_success for tag ${TRAVIS_TAG}"
   if [[ -n "${TRAVIS_TAG}" ]]; then
-    if echo "${TRAVIS_TAG}" | grep -Eq '^v(\d+\.)?(\d+\.)?(\*|\d+)'; then
+    if echo "${TRAVIS_TAG}" | python -c 'import sys, re; r = re.compile(r"^v(\d+\.)?(\d+\.)?(\*|\d+)$"); sys.exit(r.match(sys.stdin.read()) is None)'; then
       echo Deploying ${TRAVIS_TAG} to Test PyPI
       pip install twine
       twine upload --repository testpypi ${TRAVIS_BUILD_DIR}/${WHEEL_SDIR}/*.whl
@@ -93,7 +95,7 @@ deploy:
     secure: BwKCEsOA/12MulsPa8unDrjEa/AndgSo8n7eQGOotkbn9YmFu2w0rLw1cjKDK5weoBOgb0uccnjowCXKt303HWiO2/mXnEH3S3W/HgbpT5uNH/V5h3zOpj/HBbRspS8FFFXhBoZuE66UcZqg3C/r5GBQrrgHfxxRyu46B74q5J3oskh8cs/yaCEU+BzXg2fv2QjOmtQA8XFfA7LlDXha7GqTzvTNrslYYLInYC+tpJ1ZaAwRQcHVQHmMgu2TniITPJhnrS+1/DbyP12VSD8rA6S9PhRynKztSS9mcnW9eYggJvgbkj8jw6cT1pm+5Nom5K6N8Z2078uWQu+GT6Di8+ajrFpD2q0q3U/5Xt/VZcvr2fxZRY9BXw08poYeRMKEBuRvhMRfTCvOD/fzxE1fiB9lW9Qva4NWq9H9p0spWLjaEnbM55f2tFQbBdaxwMyzd3Po9v1/2WaLrduSrhWh2Ie5IwsdDSiAT+f+M7qP5ob97k4MeFJtn7XGLa9a5rtxoiFiEbtC0AIrzoZV1wEH/ZtmvY+GAjvXQx53UaA/NBRVE8zhsQIuzNFjUvPoIV3oC0NQw9BHGGHx+dN0G+cIjNduEk6elIBCY7X29imZJC+o42KSKLnVNSMzzMt3gxSnhaUzWrwRGsOcneKdSxb59V10zu4nR1us5WUII8PSNgQ=
   file_glob: true
   file: "${TRAVIS_BUILD_DIR}/${WHEEL_SDIR}/*.whl"
-  cleanup: false
+  skip_cleanup: true
   on:
     repo: jameskermode/f90wrap-wheels
     tags: true
