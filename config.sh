@@ -3,9 +3,9 @@
 
 export F90FLAGS=-fPIC # ensure Fortran sources are compiled by numpy setuptools as position independent code
 
-function run_rests{
-    F90WRAP_VERSION=$1
+export F90WRAP_VERSION=0.2.5 # FIXME should avoid duplicating this from .travis.yml
 
+function run_rests{
     # clone repo, checkout release branch and run tests
     apt-get install -y git
     git clone --depth 1 https://github.com/jameskermode/f90wrap
@@ -13,15 +13,4 @@ function run_rests{
     git checkout v${F90WRAP_VERSION}
     cd examples
     python3 run_all.py -v
-
-}
-
-function install_run{
-    PLAT=$1
-    F90WRAP_VERSION=$2
-
-    install_wheel
-    mkdir tmp_for_test
-    (cd tmp_for_test && run_tests ${F90WRAP_VERSION})
-    rmdir tmp_for_test  2>/dev/null || echo "Cannot remove tmp_for_test"
 }
