@@ -74,7 +74,7 @@ install:
 - build_index_wheel $PROJECT_SPEC
 
 script:
-- install_run $PLAT $F90WRAP_VERSION
+- install_run $PLAT
 
 after_success:
 - |
