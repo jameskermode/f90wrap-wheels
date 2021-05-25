@@ -4,7 +4,7 @@ env:
   - PROJECT_SPEC="f90wrap==${F90WRAP_VERSION}"
   - TWINE_USERNAME="__token__"
   - TWINE_NON_INTERACTIVE=1
-  - secure: VKwo04eq3Lm7uSGt7fERX+48Nbul82+v6tFZZFS8XWizGjmjPHdfOWNW/MrNvvdKPnwNyw0IKIHpqqeOyIteOkYyQNKNsCeHQuG6HlIUT5bIl0p8vvRXIHZFRQLhisuRuNrGT+qTnYtf0OnGWv383Gd0mxmuYStKFQHlqI/4guaXXSA6wYlVoPjTpNZuMJ7iN7pE0hQNSkhV7oHyQa+mAx/83BbyverzIFVzz2n6/Khlqt+BOnSu/FsMNvMWdu5OivUMaBUFY9qhp+EUGrdKZppDcqUkCDPqzgy2Gi9w6UVV3gccnnstcVs1h+rDFn+e+GD8Gf+jPgGMlkehOvkCkKGK5oXOp4ulH8N17do98bKYeLjYqRViZD4GdHo7+EY3fbwNTqkMW4KILM0rgfkZ0COabRNf9zP6HYn609xy51AzBD2xve73Ty9/b3sEMhkvFfIBg//H7l53LL6m+FWxbjfLf1txvI7EHx8S56V5Jzj8RGtmnsVshDHucwrpxgk+NaxH4COk6mx+ak0Gzky3N3j61yIXLv0SNhytIgG8eN5et26VWtpoe09Uh5UkbBm4RTto2F8G6m6hIB7CRs/S7Y7S6cV10AfvD0bH30TxyPvglTBPFV6jXfsx52V+u5u41YqXT8ehZDDewLFLyJwxky1gvYBQ+VRl00mOMpK7DkI=
+  - secure: "k8My3sFY+ym7l5Akx0nhbmzU3PRGMkUf6nlsOEXmjd+APILJ2dohMxRQOlvO8b4VL/t/N/Enewj1M6T2IEjVLJ3j1AEuTPMv6UKkFcmhab4hFm61+6/Mt+EJjM/kafuHi2SZfmTWH4zlkZmJdp808ASXHsRqV9oQwQC8cGcymtCHCyMiySPmDOLL7HDVYLmHLdRAmw8rG0SwvhNLpKQuaPX7MpyQZUrG/GGpkFscHF1UQipsBcg9ToTmiQXElSDh11CnqtSEFJXW85+q+TZ/EC/KnJRrVBnJsB//2qcuUTXkuUoQ+MRMc6bUQMn/KhaFVEzcucrR6b3wZY/MIY/9P7Iw1E7fXRvqBDVzXtpniQahjakHjCdJKmcDQdM8p1HiMvwSh+y5Ygnf254UMtUUCZb2gJNGEt/SN3+vK74KLusTrmEE1MmNz3ZZCLgQ5NutdpJ0AI4pxc/Q7OWh0EJp1l6XWYhodYeHIkk3nmQ3lBCD2WCvjZlHBo1/q7vhD9dWKC6ct15nxUqZfa19DC99xLRjC8+ZchFcKuiCNS7CItQNxKbwMs5UpeM+8RuV5tQ6482xxikX9fkXlBxn9QUPRGdZknkqyaSWbVWFAC6tZ8u3YSm8C3tyKYiptLGJy2e0LsALUQrIuSg/pwb+dB/8Xz+02CvewKTVbI03ggkIxkA="
 
 language: generic
 
@@ -81,9 +81,9 @@ after_success:
   echo "after_success for tag ${TRAVIS_TAG}"
   if [[ -n "${TRAVIS_TAG}" ]]; then
     if echo "${TRAVIS_TAG}" | python -c 'import sys, re; r = re.compile(r"^v(\d+\.)?(\d+\.)?(\*|\d+)$"); sys.exit(r.match(sys.stdin.read()) is None)'; then
-      echo Deploying ${TRAVIS_TAG} to Test PyPI
+      echo Deploying ${TRAVIS_TAG} to PyPI
       pip install twine
-      twine upload --repository testpypi ${TRAVIS_BUILD_DIR}/${WHEEL_SDIR}/*.whl
+      twine upload ${TRAVIS_BUILD_DIR}/${WHEEL_SDIR}/*.whl
     else
       echo Skipping deployment of tag ${TRAVIS_TAG} to PyPi
     fi
