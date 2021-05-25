@@ -9,6 +9,7 @@ function run_tests {
     # clone repo, checkout release branch and run tests
     if [[ ! -n "$IS_MACOS" ]]; then
         apt-get install -y git
+        apt-get install -y gfortran
     fi
     git clone --depth 1 https://github.com/jameskermode/f90wrap
     cd f90wrap
