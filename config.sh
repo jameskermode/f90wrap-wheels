@@ -3,7 +3,10 @@
 
 export F90FLAGS=-fPIC # ensure Fortran sources are compiled by numpy setuptools as position independent code
 
-export F90WRAP_VERSION=0.2.5 # FIXME should avoid duplicating this from .travis.yml
+export F90WRAP_VERSION=0.2.6 # FIXME should avoid duplicating this from .travis.yml
+
+source gfortran-install/gfortran_utils.sh
+install_gfortran
 
 function run_tests {
     # clone repo, checkout release branch and run tests
