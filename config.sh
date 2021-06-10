@@ -13,6 +13,8 @@ function pre_build {
         # ensure we use the cross-compiler for Fortran 90 as well F77
         export F90=/opt/gfortran-darwin-arm64/bin/arm64-apple-darwin20.0.0-gfortran
     fi
+    which python
+    python -c "import sys; print(sys.version)"
 }
 
 function run_tests {
