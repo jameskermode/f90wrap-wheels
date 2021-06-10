@@ -24,13 +24,16 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         python: [3.6, 3.7, 3.8, 3.9]
         manylinux: [1, 2010, 2014]
-        plat: [x86_64]
         include:
           - os: macos-latest
             python: 3.9
-            manylinux: 1
-            plat: universal2
+            manylinux: x86_64
+          - os: macos-latest
+            python: 3.9
+            manylinux: universal2
         exclude:
+          - os: macos-latest
+            manylinux: 1
           - os: macos-latest
             manylinux: 2010
           - os: macos-latest
@@ -47,7 +50,7 @@ jobs:
         env:
           MB_PYTHON_VERSION: ${{ matrix.python }}
           MB_ML_VER: ${{ matrix.manylinux }}
-          PLAT: ${{ matrix.plat }}
+          PLAT: x86_64
           BUILD_DEPENDS: oldest-supported-numpy
           TEST_DEPENDS: numpy
           F90WRAP_VERSION: 0.2.6
@@ -59,6 +62,10 @@ jobs:
 
           source multibuild/common_utils.sh
           source multibuild/travis_steps.sh
+          
+          if [[ -n "$IS_MACOS" ]]; then
+              export PLAT=${{ matrix.manylinux }}
+          fi
           
           # restore GitHub Actions system Python to front of path
           export PATH=${PYTHON_DIR}:$PATH
