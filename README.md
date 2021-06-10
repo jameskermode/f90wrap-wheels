@@ -52,7 +52,7 @@ pip install https://github.com/jameskermode/f90wrap-wheels/releases/download/v0.
 If there are problems with the build, the `test.sh` script can be useful to
 debug  within a local Docker container.
 
-### Release wheels to PyPI
+### Release wheels to PyPI
 
 Once everything works correctly, make a full release (i.e. create a tag named
 just `v0.x.y` without the `-rc1` suffix). This will trigger the upload of wheels
