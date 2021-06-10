@@ -40,7 +40,7 @@ jobs:
       - name: Build and test
         env:
           MB_PYTHON_VERSION: ${{ matrix.python }}
-          MB_ML_VERSION: ${{ matrix.manylinux }}
+          MB_ML_VER: ${{ matrix.manylinux }}
           PLAT: x86_64
           BUILD_DEPENDS: oldest-supported-numpy
           TEST_DEPENDS: numpy
