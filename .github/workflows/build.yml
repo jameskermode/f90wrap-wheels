@@ -53,10 +53,20 @@ jobs:
         run: |
           export PROJECT_SPEC="f90wrap==${F90WRAP_VERSION}"
                   
+          echo PATH1=$PATH
+          which python
+          python -c "import sys; print(sys.version)"
+
+
           source multibuild/common_utils.sh
+          
+          echo PATH2=$PATH
+          which python
+          python -c "import sys; print(sys.version)"
+          
           source multibuild/travis_steps.sh
 
-          echo PATH=$PATH
+          echo PATH3=$PATH
           which python
           python -c "import sys; print(sys.version)"
 
