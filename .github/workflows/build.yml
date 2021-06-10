@@ -26,8 +26,6 @@ jobs:
         manylinux: [1, 2010, 2014]
         exclude:
           - os: macos-latest
-            manylinux: 1
-          - os: macos-latest
             manylinux: 2010
           - os: macos-latest
             manylinux: 2014           
