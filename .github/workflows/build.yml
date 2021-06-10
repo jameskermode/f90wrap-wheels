@@ -24,6 +24,10 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         python: [3.6, 3.7, 3.8, 3.9]
         manylinux: [1, 2010, 2014]
+        plat: [x86_64]
+        include:
+          - os: macos-latest
+            plat: universal2
         exclude:
           - os: macos-latest
             manylinux: 2010
@@ -41,7 +45,7 @@ jobs:
         env:
           MB_PYTHON_VERSION: ${{ matrix.python }}
           MB_ML_VER: ${{ matrix.manylinux }}
-          PLAT: x86_64
+          PLAT: ${{ matrix.plat }}
           BUILD_DEPENDS: oldest-supported-numpy
           TEST_DEPENDS: numpy
           F90WRAP_VERSION: 0.2.6
