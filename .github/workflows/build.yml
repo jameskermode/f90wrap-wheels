@@ -27,6 +27,8 @@ jobs:
         plat: [x86_64]
         include:
           - os: macos-latest
+            python: 3.9
+            manylinux: 1
             plat: universal2
         exclude:
           - os: macos-latest
