@@ -15,14 +15,20 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    runs-on: {{matrix.os}}
+    
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python: [3.6, 3.7, 3.8, 3.9]
+        manylinux: [1, 2010, 2014]
+        exclude:
+          - os: macos-latest
+            manylinux: 2010
+          - os: macos-latest
+            manylinux: 2014           
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
@@ -31,16 +37,16 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Build and test
+        env:
+          MB_PYTHON_VERSION: ${{ matrix.python }}
+          MB_ML_VERSION: ${{ matrix.manylinux }}
+          PLAT: x86_64
+          BUILD_DEPENDS: oldest-supported-numpy
+          TEST_DEPENDS: numpy
+          F90WRAP_VERSION: 0.2.6
         run: |
-          export BUILD_DEPENDS="oldest-supported-numpy"
-          export TEST_DEPENDS="numpy"
-          export F90WRAP_VERSION=0.2.6
           export PROJECT_SPEC="f90wrap==${F90WRAP_VERSION}"
-          
-          export MB_PYTHON_VERSION=3.6
-          export MB_ML_VERSION=1
-          export PLAT=x86_64
-        
+                  
           source multibuild/common_utils.sh
           source multibuild/travis_steps.sh
           
