@@ -28,7 +28,7 @@ python3 -m twine dist/f90wrap-0.x.y.tar.gz  # upload to PyPI
 ### Triggering the wheel build
 
 Now change to the `f90wrap-wheels` repo, and change the `F90WRAP_VERSION`
-environment variable in `.travis.yml` to match the just-released version plus a
+environment variable in `.github/workflows/build.yml` to match the just-released version plus a
 release candidate suffix such as `-rc1` for the first attempt, create a matching
 tag and push to trigger the build:
 
