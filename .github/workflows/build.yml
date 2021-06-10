@@ -56,7 +56,7 @@ jobs:
           
           # restore GitHub Actions system Python to front of path
           export PATH=${PYTHON_DIR}:$PATH
-          pip install virtualenv # ensure virtualenv available
+          pip install virtualenv
           
           before_install
           build_index_wheel $PROJECT_SPEC
