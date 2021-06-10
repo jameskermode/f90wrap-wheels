@@ -28,7 +28,7 @@ jobs:
           submodules: 'recursive'      
 
       # Runs a set of commands using the runners shell
-      - name: Before install
+      - name: Build and test
         run: |
           export BUILD_DEPENDS="oldest-supported-numpy"
           export TEST_DEPENDS="numpy"
@@ -42,8 +42,6 @@ jobs:
           source multibuild/common_utils.sh
           source multibuild/travis_steps.sh
           
-      - name: Build wheel
-        run: build_index_wheel $PROJECT_SPEC
+          build_index_wheel $PROJECT_SPEC
         
-      - name: Test wheel
-        run: install_run $PLAT
+          install_run $PLAT
