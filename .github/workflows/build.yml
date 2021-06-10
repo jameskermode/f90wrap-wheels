@@ -37,11 +37,6 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
-      - name: Display Python version
-        run: |
-          echo PATH=$PATH
-          which python
-          python -c "import sys; print(sys.version)"
       - name: Build and test
         env:
           MB_PYTHON_VERSION: ${{ matrix.python }}
@@ -52,14 +47,17 @@ jobs:
           F90WRAP_VERSION: 0.2.6
         run: |
           export PROJECT_SPEC="f90wrap==${F90WRAP_VERSION}"
-          
+
+          # save path to Python 3.x version
           PYTHON_DIR=$(dirname $(which python))
 
           source multibuild/common_utils.sh
           source multibuild/travis_steps.sh
           
+          # restore GitHub Actions system Python to front of path
           export PATH=${PYTHON_DIR}:$PATH
-          pip install virtualenv
+          pip install virtualenv # ensure virtualenv available
+          
           before_install
           build_index_wheel $PROJECT_SPEC
           install_run $PLAT
