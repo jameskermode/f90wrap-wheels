@@ -38,7 +38,10 @@ jobs:
         with:
           python-version: '3.x'
       - name: Display Python version
-        run: python -c "import sys; print(sys.version)"
+        run: |
+          echo PATH=$PATH
+          which python
+          python -c "import sys; print(sys.version)"
       - name: Build and test
         env:
           MB_PYTHON_VERSION: ${{ matrix.python }}
@@ -52,7 +55,11 @@ jobs:
                   
           source multibuild/common_utils.sh
           source multibuild/travis_steps.sh
-          
+
+          echo PATH=$PATH
+          which python
+          python -c "import sys; print(sys.version)"
+
           build_index_wheel $PROJECT_SPEC
         
           install_run $PLAT
