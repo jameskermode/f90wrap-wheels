@@ -21,9 +21,8 @@ function run_tests {
         apt-get install -y git
         apt-get install -y gfortran
     fi
-    git clone --depth 1 https://github.com/jameskermode/f90wrap
+    git clone --depth 1 --branch v${F90WRAP_VERSION} https://github.com/jameskermode/f90wrap
     cd f90wrap
-    git checkout v${F90WRAP_VERSION}
     cd examples
     make test
 }
