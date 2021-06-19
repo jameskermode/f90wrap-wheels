@@ -3,7 +3,7 @@
 	url = https://github.com/matthew-brett/multibuild.git
 [submodule "f90wrap"]
 	path = f90wrap
-	url = https://github.com/jameskermode/f90wrap.git
+	url = https://github.com/jameskermode/f90wrap
 [submodule "gfortran-install"]
 	path = gfortran-install
 	url = https://github.com/MacPython/gfortran-install
