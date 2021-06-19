@@ -24,6 +24,7 @@ function run_tests {
         apt-get install -y gfortran
     fi
     git clone --depth 1 --branch v${F90WRAP_VERSION} https://github.com/jameskermode/f90wrap
+    export F90=/opt/gfortran-darwin-arm64/bin/arm64-apple-darwin20.0.0-gfortran
     cd f90wrap
     cd examples
     make test
