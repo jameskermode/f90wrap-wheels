@@ -50,7 +50,7 @@ jobs:
           PLAT: ${{ matrix.plat }}
           BUILD_DEPENDS: oldest-supported-numpy
           TEST_DEPENDS: numpy
-	  REPO_DIR: f90wrap
+          REPO_DIR: f90wrap
           F90WRAP_VERSION: 0.2.6
         run: |
 
