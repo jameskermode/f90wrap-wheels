@@ -50,9 +50,9 @@ jobs:
           PLAT: ${{ matrix.plat }}
           BUILD_DEPENDS: oldest-supported-numpy
           TEST_DEPENDS: numpy
+	  REPO_DIR: f90wrap
           F90WRAP_VERSION: 0.2.6
         run: |
-          export PROJECT_SPEC="f90wrap==${F90WRAP_VERSION}"
 
           # save path to Python 3.x version
           PYTHON_DIR=$(dirname $(which python))
@@ -65,7 +65,7 @@ jobs:
           pip install virtualenv
           
           before_install
-          build_index_wheel $PROJECT_SPEC
+          build_wheel $REPO_DIR $PLAT
           install_run $PLAT
           
       - name: Release wheels
