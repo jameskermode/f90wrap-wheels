@@ -13,8 +13,13 @@ function pre_build {
     fi
 }
 
-function run_tests {
-    cd f90wrap
-    cd examples
+# override install_run from multibuild, since we need to access the tests from repo root
+function install_run {
+    if [ "$PLAT" == "arm64" ] || [ "$PLAT" == "universal2" ]; then
+	export F90=/opt/gfortran-darwin-arm64/bin/arm64-apple-darwin20.0.0-gfortran
+    fi    
+    install_wheel
+    cd f90wrap/examples
     make test
 }
+
