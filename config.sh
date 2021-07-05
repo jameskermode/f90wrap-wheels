@@ -25,7 +25,7 @@ function install_run {
 	return
     fi    
     install_wheel
-    if [[ ! -n "IS_MACOS" ]]; then
+    if [ -z "$IS_MACOS" ]; then
         yum install -y gfortran
     fi
     cd f90wrap/examples
