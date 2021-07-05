@@ -24,8 +24,8 @@ function install_run {
     	echo Skipping test for cross-compiled wheel $PLAT
 	return
     fi    
-    install_gfortran
     install_wheel
+    apt-get install gfortran
     cd f90wrap/examples
     make test
 }
