@@ -5,6 +5,11 @@ export F90FLAGS=-fPIC # ensure Fortran sources are compiled by numpy setuptools 
 
 source gfortran-install/gfortran_utils.sh
 
+function install_delocate {
+    check_pip
+    $PIP_CMD install git+https://github.com/isuruf/delocate.git@arm64
+}
+
 function pre_build {
     install_gfortran
     if [ "$PLAT" == "arm64" ] || [ "$PLAT" == "universal2" ]; then
