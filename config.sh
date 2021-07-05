@@ -25,7 +25,9 @@ function install_run {
 	return
     fi    
     install_wheel
-    apt-get install gfortran
+    if [[ ! -n "IS_MACOS" ]]; then
+        yum install -y gfortran
+    fi
     cd f90wrap/examples
     make test
 }
