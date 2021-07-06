@@ -28,7 +28,7 @@ jobs:
         include:
           - os: macos-latest
             python: 3.9
-            plat: arm64
+            plat: universal2
         exclude:
           - os: macos-latest
             manylinux: 2010
