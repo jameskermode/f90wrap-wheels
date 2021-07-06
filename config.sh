@@ -20,10 +20,10 @@ function pre_build {
 
 # override install_run from multibuild, since we need to access the tests from repo root
 function install_run {
-    if [ "$PLAT" == "arm64" ]; then
-    	echo Skipping test for cross-compiled wheel $PLAT
-	return
-    fi    
+#     if [ "$PLAT" == "arm64" ]; then
+#     	echo Skipping test for cross-compiled wheel $PLAT
+# 	return
+#     fi    
     install_wheel
     if [ -z "$IS_MACOS" ]; then
         apt-get install -y gfortran
