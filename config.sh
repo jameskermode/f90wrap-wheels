@@ -13,14 +13,14 @@ function install_delocate {
 function pre_build {
     install_gfortran
     if [ "$PLAT" == "arm64" ] || [ "$PLAT" == "universal2" ]; then
-        # ensure we use the cross-compiler for Fortran 90 as well F77
+        # ensure we use the cross-compiler for Fortran 90 as well as F77
         export F90=/opt/gfortran-darwin-arm64/bin/arm64-apple-darwin20.0.0-gfortran
     fi
 }
 
 # override install_run from multibuild, since we need to access the tests from repo root
 function install_run {
-    if [ "$PLAT" == "arm64" ] || [ "$PLAT" == "universal2" ]; then
+    if [ "$PLAT" == "arm64" ]; then
     	echo Skipping test for cross-compiled wheel $PLAT
 	return
     fi    
