@@ -4,20 +4,26 @@
 export F90FLAGS=-fPIC # ensure Fortran sources are compiled by numpy setuptools as position independent code
 
 source gfortran-install/gfortran_utils.sh
-install_gfortran
 
 function install_delocate {
     check_pip
     $PIP_CMD install git+https://github.com/isuruf/delocate.git@arm64
 }
 
-# function pre_build {
-# }
+function pre_build {
+   if [ ! -f gfortran_installed ]; then
+       install_gfortran
+       touch gfortran_installed
+   fi
+}
 
 # customize setup of cross compiler to remove -Wl,-rpath options that stop delocate from working correctly
 function macos_arm64_cross_build_setup {
     echo Running custom macos_arm64_cross_build_setup
-#     install_gfortran    
+    if [ ! -f gfortran_installed ]; then
+        install_gfortran
+        touch gfortran_installed
+    fi
     # Setup cross build for single arch arm_64 wheels
     export PLAT="arm64"
     export BUILD_PREFIX=/opt/arm64-builds
