@@ -17,10 +17,7 @@ function install_delocate {
 # customize setup of cross compiler to remove -Wl,-rpath options that stop delocate from working correctly
 function macos_arm64_cross_build_setup {
     echo Running custom macos_arm64_cross_build_setup
-#     install_gfortran
-    if [ "$PLAT" == "arm64" ] || [ "$PLAT" == "universal2" ]; then
-        # ensure we use the cross-compiler for Fortran 90 as well as F77
-    fi    
+#     install_gfortran    
     # Setup cross build for single arch arm_64 wheels
     export PLAT="arm64"
     export BUILD_PREFIX=/opt/arm64-builds
