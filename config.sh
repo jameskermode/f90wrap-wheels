@@ -4,23 +4,23 @@
 export F90FLAGS=-fPIC # ensure Fortran sources are compiled by numpy setuptools as position independent code
 
 source gfortran-install/gfortran_utils.sh
+install_gfortran
 
 function install_delocate {
     check_pip
     $PIP_CMD install git+https://github.com/isuruf/delocate.git@arm64
 }
 
-function pre_build {
-    install_gfortran
-    if [ "$PLAT" == "arm64" ] || [ "$PLAT" == "universal2" ]; then
-        # ensure we use the cross-compiler for Fortran 90 as well as F77
-        export F90=/opt/gfortran-darwin-arm64/bin/arm64-apple-darwin20.0.0-gfortran
-    fi
-}
+# function pre_build {
+# }
 
 # customize setup of cross compiler to remove -Wl,-rpath options that stop delocate from working correctly
 function macos_arm64_cross_build_setup {
     echo Running custom macos_arm64_cross_build_setup
+#     install_gfortran
+    if [ "$PLAT" == "arm64" ] || [ "$PLAT" == "universal2" ]; then
+        # ensure we use the cross-compiler for Fortran 90 as well as F77
+    fi    
     # Setup cross build for single arch arm_64 wheels
     export PLAT="arm64"
     export BUILD_PREFIX=/opt/arm64-builds
@@ -34,6 +34,7 @@ function macos_arm64_cross_build_setup {
     export ARCHFLAGS+=" -arch arm64"
     export FCFLAGS+=" -arch arm64"
     export FC=$FC_ARM64
+    export F90=/$FC_ARM64    
     export MACOSX_DEPLOYMENT_TARGET="11.0"
     export CROSS_COMPILING=1
     local libgfortran="$(find /opt/gfortran-darwin-arm64/lib -name libgfortran.dylib)"
