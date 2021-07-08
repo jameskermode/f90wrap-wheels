@@ -11,10 +11,14 @@ function install_delocate {
 }
 
 function pre_build {
-   if [ ! -f gfortran_installed ]; then
+   if [ ! -f gfortran_stamp ]; then
        install_gfortran
-       touch gfortran_installed
+       touch gfortran_stamp
    fi
+}
+
+function pip_opts {
+    [ -n "$MANYLINUX_URL" ] && echo "-v --find-links $MANYLINUX_URL" || echo "-v"
 }
 
 # customize setup of cross compiler to remove -Wl,-rpath options that stop delocate from working correctly
@@ -22,7 +26,7 @@ function macos_arm64_cross_build_setup {
     echo Running custom macos_arm64_cross_build_setup
     if [ ! -f gfortran_installed ]; then
         install_gfortran
-        touch gfortran_installed
+        touch gfortran_stamp
     fi
     # Setup cross build for single arch arm_64 wheels
     export PLAT="arm64"
@@ -46,6 +50,7 @@ function macos_arm64_cross_build_setup {
     export LDFLAGS+=" -arch arm64 -L$BUILD_PREFIX/lib $FC_ARM64_LDFLAGS"
     # This would automatically let autoconf know that we are cross compiling for arm64 darwin
     export host_alias="aarch64-apple-darwin20.0.0"
+    echo LDFLAGS=$LDFLAGS
 }
 
 # override install_run from multibuild, since we need to access the tests from repo root
