@@ -94,11 +94,12 @@ jobs:
         if: steps.check-tag.outputs.match == 'true'
         run: |
           if [ ${{ matrix.plat }} == "sdist" ]; then
+            pip install twine build
             cd f90wrap
             python -m build
             twine upload dist/f90wrap-*.tar.gz          
           else
-            pip install twine build
+            pip install twine
             twine upload wheelhouse/*.whl
           fi
         env:
