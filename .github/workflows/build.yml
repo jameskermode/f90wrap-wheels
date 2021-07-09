@@ -29,6 +29,9 @@ jobs:
           - os: macos-latest
             python: 3.9
             plat: arm64
+          - os: ubuntu-latest
+            python: 3.9
+            plat: sdist
         exclude:
           - os: macos-latest
             manylinux: 2010
@@ -44,6 +47,7 @@ jobs:
         with:
           python-version: '3.x'
       - name: Build and test
+        if: matrix.plat != "sdist"
         env:
           MB_PYTHON_VERSION: ${{ matrix.python }}
           MB_ML_VER: ${{ matrix.manylinux }}
@@ -52,22 +56,20 @@ jobs:
           TEST_DEPENDS: numpy
           REPO_DIR: f90wrap
           F90WRAP_VERSION: 0.2.6
-        run: |
-
+        run: |        
           # save path to Python 3.x version
           PYTHON_DIR=$(dirname $(which python))
 
           source multibuild/common_utils.sh
           source multibuild/travis_steps.sh
-          
+
           # restore GitHub Actions system Python to front of path
           export PATH=${PYTHON_DIR}:$PATH
           pip install virtualenv
-          
+
           before_install
           build_wheel $REPO_DIR $PLAT
           install_run $PLAT
-          
       # Uncomment to get SSH access for testing
       - name: Setup tmate session
         if: failure()
@@ -91,8 +93,14 @@ jobs:
       - name: Deploy to PyPI
         if: steps.check-tag.outputs.match == 'true'
         run: |
-          pip install twine
-          twine upload wheelhouse/*.whl
+          if [ ${{ matrix.plat }} == "sdist" ]; then
+            cd f90wrap
+            python -m build
+            twine upload dist/f90wrap-*.tar.gz          
+          else
+            pip install twine build
+            twine upload wheelhouse/*.whl
+          fi
         env:
           TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
