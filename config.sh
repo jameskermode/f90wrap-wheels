@@ -15,13 +15,16 @@ function pre_build {
        install_gfortran
        touch gfortran_stamp
    fi
+   if [ "$PLAT" == "arm64" ]; then
+       export F90=$FC
+   fi
 }
 
 function pip_opts {
-    [ -n "$MANYLINUX_URL" ] && echo "-v --find-links $MANYLINUX_URL" || echo "-v"
+    [ -n "$MANYLINUX_URL" ] && echo "-v --find-links $MANYLINUX_URL" || echo "-v --no-clean"
 }
 
-# customize setup of cross compiler to remove -Wl,-rpath options that stop delocate from working correctly
+# customize setup of cross compiler to fix -Wl,-rpath option
 function macos_arm64_cross_build_setup {
     echo Running custom macos_arm64_cross_build_setup
     if [ ! -f gfortran_installed ]; then
@@ -41,12 +44,12 @@ function macos_arm64_cross_build_setup {
     export ARCHFLAGS+=" -arch arm64"
     export FCFLAGS+=" -arch arm64"
     export FC=$FC_ARM64
-    export F90=/$FC_ARM64    
+    export F90=$FC_ARM64
     export MACOSX_DEPLOYMENT_TARGET="11.0"
     export CROSS_COMPILING=1
     local libgfortran="$(find /opt/gfortran-darwin-arm64/lib -name libgfortran.dylib)"
     local libdir=$(dirname $libgfortran)
-    export FC_ARM64_LDFLAGS="-L$libdir"
+    export FC_ARM64_LDFLAGS="-L$libdir -Wl,-rpath,$libdir"
     export LDFLAGS+=" -arch arm64 -L$BUILD_PREFIX/lib $FC_ARM64_LDFLAGS"
     # This would automatically let autoconf know that we are cross compiling for arm64 darwin
     export host_alias="aarch64-apple-darwin20.0.0"
