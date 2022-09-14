@@ -1,5 +1,8 @@
 # f90wrap-wheels
 
+**NOW DEUFUNCT** Wheels are now build directly in the [f90wrap](https://github.com/jameskermode/f90wrap) repo
+
+
 Wheel builder for [f90wrap](https://github.com/jameskermode/f90wrap)
 
 This repository uses [multibuild](https://github.com/matthew-brett/multibuild)
